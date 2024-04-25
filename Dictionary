@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIODIARY</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(74, 133, 151);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: rgb(74, 133, 151);
+        }
+
+        #dictionary,
+        #diary {
+            background-color: #d6d6d6;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+
+        #dictionary input[type="text"],
+        #newEntry {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: rgb(74, 133, 151);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: rgb(50, 100, 120);
+        }
+
+        .box-container {
+            border: 1px solid #4d4d4d;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .delete-button {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #d32f2f;
+        }
+        .container h1{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: 900;
+            font-size: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>SCIENCE DIARY</h1>
+        <div id="dictionary">
+            <input type="text" id="wordInput" placeholder="Enter a word">
+            <button onclick="lookupWord()">Lookup</button>
+            <button onclick="resetDictionary()">Reset</button>
+            <div id="definition"></div>
+        </div>
+
+        <div id="diary">
+            <textarea id="newEntry" placeholder="Write your diary entry here..."></textarea>
+            <button onclick="addEntry()">Add Entry</button>
+            <div id="diaryEntries">
+                <!-- Diary entries will be displayed here -->
+            </div>
+        </div>
+    </div>
+    <script>
+        function lookupWord() {
+        var word = document.getElementById('wordInput').value;
+
+        var dictionary = {
+            'abdomen': 'The part of the body between the chest and the pelvis.',
+            'abdominalCavity': 'The space within the abdomen that houses various organs.',
+            'abiogenesis': 'The hypothesis that life arises from non-living matter.',
+            'abioticFactors': 'Non-living components of an ecosystem.',
+    'aceticAcid': 'A clear, colorless liquid organic compound, the main component of vinegar.',
+    'activeImmunity': 'Immunity resulting from the body\'s own immune response.',
+    'activeSite': 'The specific region of an enzyme where a substrate binds.',
+    'activeTransport': 'Movement of molecules across a cell membrane against their concentration gradient.',
+    'adaptation': 'Process by which an organism becomes better suited to its environment.',
+    'adaptiveRadiation': 'Evolution of ecological and phenotypic diversity within a rapidly multiplying lineage.',
+    'adenosineTriphosphate': 'Molecule used by cells to store and transfer energy.',
+    'adhesion': 'The sticking together of particles of different substances.',
+    'adrenalGland': 'A gland located on top of the kidney that produces hormones.',
+    'aerobicRespiration': 'Process of producing cellular energy involving oxygen.',
+    'agonist': 'A substance that initiates a physiological response when combined with a receptor.',
+    'aldosterone': 'A hormone that regulates electrolyte balance.',
+    'algae': 'A diverse group of aquatic organisms capable of photosynthesis.',
+    'alimentaryCanal': 'The digestive tract from the mouth to the anus.',
+    'allantois': 'An extra-embryonic membrane involved in respiration and waste storage in embryonic reptiles, birds, and mammals.',
+    'allele': 'One of two or more alternative forms of a gene that arise by mutation.',
+    'alleleFrequency': 'The proportion of a particular allele among all allele copies being considered.',
+    'allopatricSpeciation': 'The process of speciation that occurs when a population is separated by a geographic barrier.',
+    'alternationOfGenerations': 'A life cycle in which organisms alternate between multicellular haploid and diploid generations.',
+    'alternativeSplicing': 'A process during gene expression in which a single gene can code for multiple proteins.',
+    'aminoAcids': 'The building blocks of proteins.',
+    'ammonification': 'The process by which ammonia is released from organic compounds.',
+    'amnion': 'An extra-embryonic membrane that encloses the embryo in a fluid-filled sac.',
+    'amniotes': 'Vertebrates that have a membrane-bound amniotic egg.',
+    'amnioticFluid': 'The fluid surrounding a developing embryo within the amnion.',
+    'amoeba': 'A type of single-celled organism that moves by pseudopodia and engulfs food particles by phagocytosis.',
+    'bacteria': 'Single-celled microorganisms that can be found in various environments.',
+    'bacteriophage': 'A virus that infects and replicates within bacteria.',
+    'basePairs': 'Pairs of nucleotides that form the building blocks of DNA and RNA.',
+    'basophil': 'A type of white blood cell involved in allergic reactions and inflammation.',
+    'behavior': 'The actions and reactions of organisms to stimuli in their environment.',
+    'biochemistry': 'The branch of science that explores the chemical processes within and related to living organisms.',
+    'biodiversity': 'The variety of life forms present in a particular ecosystem or on Earth as a whole.',
+    'biogenesis': 'The principle that living organisms arise only from other living organisms.',
+    'biogeochemicalCycle': 'The cycling of chemical elements and compounds between living organisms and the environment.',
+    'bioluminescence': 'The production and emission of light by living organisms.',
+    'biomass': 'The total mass of living organisms in a given area or volume.',
+    'biome': 'A large-scale ecological community characterized by distinct climate and vegetation.',
+    'biotechnology': 'The use of living organisms, cells, and biological systems to develop new technologies.',
+    'bioticFactors': 'Living components of an ecosystem, including plants, animals, and microorganisms.',
+    'blastocyst': 'A stage of early embryonic development in mammals.',
+    'blood': 'A bodily fluid that transports nutrients, oxygen, and waste products throughout the body.',
+    'bloodPressure': 'The force exerted by circulating blood against the walls of blood vessels.',
+    'bloodVessels': 'Tubular structures that carry blood throughout the body.',
+    'botany': 'The scientific study of plants.',
+    'brain': 'The complex organ in vertebrates that coordinates sensory information and responses.',
+    'breathing': 'The process of inhaling oxygen and exhaling carbon dioxide.',
+    'bryophyte': 'A non-vascular plant such as moss, liverwort, or hornwort.',
+    'budding': 'A form of asexual reproduction in which a new organism develops from an outgrowth or bud.',
+    'buffers': 'Substances that resist changes in pH by accepting or releasing hydrogen ions.',
+    'bulb': 'A modified underground storage organ of some plants.',
+    'bulbousplants': 'Plants that produce bulbs as part of their life cycle.',
+    'bursaOfFabricius': 'A lymphoid organ in birds that plays a role in immune function.',
+    'bursitis': 'Inflammation of a bursa, typically caused by repetitive motions or injury.',
+    'carbonCycle': 'The process by which carbon is exchanged between the atmosphere, oceans, soil, rocks, and living organisms.',
+    'carbohydrates': 'A class of organic compounds including sugars, starches, and cellulose, used as energy sources by organisms.',
+    'carnivore': 'An organism that primarily feeds on animal tissue.',
+    'carpalBones': 'The bones forming the wrist in vertebrates.',
+    'cartilage': 'A flexible connective tissue found in many parts of the body, providing support and cushioning.',
+    'cell': 'The basic structural and functional unit of all living organisms.',
+    'cellMembrane': 'The semi-permeable membrane surrounding the cytoplasm of a cell.',
+    'cellTheory': 'The scientific theory that all living organisms are composed of cells, and that cells are the basic units of structure and function in living organisms.',
+    'cellWall': 'A rigid layer surrounding the cell membrane of plants, fungi, and some bacteria, providing structural support and protection.',
+    'cellularRespiration': 'The process by which cells break down glucose and other organic molecules to produce ATP, the primary energy currency of cells.',
+    'centralNervousSystem': 'The part of the nervous system consisting of the brain and spinal cord, responsible for processing and coordinating sensory data and motor commands.',
+    'chlorophyll': 'A green pigment found in the chloroplasts of plants and algae, essential for photosynthesis.',
+    'chloroplast': 'An organelle found in plant and algal cells, responsible for photosynthesis.',
+    'chromosome': 'A thread-like structure of nucleic acids and proteins found in the nucleus of most living cells, carrying genetic information in the form of genes.',
+    'cloning': 'The process of producing genetically identical copies of an organism or cell.',
+    'codon': 'A sequence of three nucleotides that codes for a specific amino acid or signals the start or end of protein synthesis.',
+    'community': 'An ecological community is a group of interacting organisms sharing a defined habitat.',
+    'competition': 'The interaction between organisms or species for limited resources such as food, water, or territory.',
+    'conjugation': 'The transfer of genetic material between two bacterial cells through direct contact.',
+    'consumer': 'An organism that obtains energy by consuming other organisms or organic matter.',
+    'cytoplasm': 'The jelly-like substance that fills the cell, where most cellular activities take place.',
+    'cytokinesis': 'The division of the cytoplasm during cell division.',
+    'cytoskeleton': 'A network of protein filaments within the cytoplasm of eukaryotic cells, providing structural support and facilitating cell movement and shape.',
+    'darwinianEvolution': 'The theory of evolution by natural selection proposed by Charles Darwin, which suggests that species evolve over time through the process of natural selection.',
+    'decomposer': 'An organism that decomposes organic material, returning essential nutrients to the ecosystem.',
+    'dehydrationSynthesis': 'A chemical reaction in which two molecules combine to form a larger molecule, with the loss of a smaller molecule, often water.',
+    'dendrite': 'A branched extension of a nerve cell, which receives electrical signals from other neurons.',
+    'denitrification': 'The process by which nitrates and nitrites are converted into nitrogen gas or nitrous oxide, returning nitrogen to the atmosphere.',
+    'deoxyribonucleicAcid': 'A molecule that carries the genetic instructions used in the growth, development, functioning, and reproduction of all known living organisms and many viruses.',
+    'diffusion': 'The process by which molecules move from an area of higher concentration to an area of lower concentration, resulting in the uniform distribution of particles.',
+    'digestion': 'The process of breaking down food into smaller components that can be absorbed and used by the body.',
+    'diploid': 'A cell or organism containing two sets of chromosomes, one set inherited from each parent.',
+    'dnaReplication': 'The process by which DNA makes a copy of itself during cell division, ensuring genetic continuity.',
+    'dominantAllele': 'An allele that is expressed when present in either the homozygous or heterozygous state, masking the effect of a recessive allele.',
+    'dormancy': 'A state of reduced metabolic activity in which an organism is able to survive adverse environmental conditions.',
+    'dorsal': 'Referring to the back or upper side of an organism.',
+    'doubleHelix': 'The structure of DNA, consisting of two helical strands wound around each other.',
+    'downSyndrome': 'A genetic disorder caused by the presence of an extra chromosome 21, resulting in intellectual disability and physical abnormalities.',
+    'drosophilaMelanogaster': 'A species of fruit fly commonly used in genetic research due to its short life cycle and easily observable phenotypes.',
+    'ductusArteriosus': 'A blood vessel in fetal circulation that connects the pulmonary artery to the aorta, bypassing the lungs.',
+    'ecosystem': 'A biological community of interacting organisms and their physical environment.',
+    'ecologicalNiche': 'The role and position of a species within its ecosystem, including its habitat, interactions with other organisms, and utilization of resources.',
+    'ecology': 'The scientific study of the relationships between living organisms and their environment.',
+    'ectoderm': 'The outermost of the three primary germ layers in the early embryo, giving rise to the skin, nervous system, and other tissues.',
+    'ectotherm': 'An organism that regulates its body temperature primarily through external means, such as basking in the sun.',
+    'egg': 'The female reproductive cell, typically containing nutrients and genetic material for the development of a new organism upon fertilization.',
+    'electronTransportChain': 'A series of protein complexes and electron carrier molecules that transfer electrons during cellular respiration, generating ATP.',
+    'embryo': 'An early stage in the development of a multicellular organism, following fertilization and preceding birth or hatching.',
+    'endocrineSystem': 'The system of glands that secrete hormones into the bloodstream to regulate bodily functions and maintain homeostasis.',
+    'endocytosis': 'The process by which cells engulf external materials by forming vesicles from the cell membrane.',
+    'endoderm': 'The innermost of the three primary germ layers in the early embryo, giving rise to the lining of the digestive tract and associated organs.',
+    'habitat': 'The specific environment in which an organism lives and thrives, characterized by its physical and biological features.',
+    'haploid': 'Having a single set of chromosomes, as opposed to the diploid state, which has two sets of chromosomes.',
+    'helicase': 'An enzyme that unwinds and separates the two strands of DNA during DNA replication.',
+    'hemoglobin': 'The iron-containing protein found in red blood cells that binds to oxygen and carries it from the lungs to tissues throughout the body.',
+    'herbivore': 'An organism that primarily feeds on plants.',
+    'heredity': 'The passing of genetic information from parent to offspring, influencing the traits and characteristics of the offspring.',
+    'heterotroph': 'An organism that obtains organic nutrients by consuming other organisms or their organic byproducts.',
+    'hibernation': 'A state of reduced metabolic activity and dormancy in animals, typically occurring during the winter months to conserve energy.',
+    'homeostasis': 'The ability of an organism to maintain internal stability and balance in response to changes in the external environment.',
+    'hormone': 'A signaling molecule produced by glands and transported through the bloodstream to target cells or organs, regulating various physiological processes.',
+    'humanGenomeProject': 'An international scientific research project that aimed to map and sequence the entire human genome, identifying and mapping all the genes of the human species.',
+    'hybrid': 'An organism resulting from the cross-breeding of two different species or varieties.',
+    'hydrolysis': 'A chemical reaction in which a compound is broken down into smaller molecules by the addition of water molecules.',
+    'hypertension': 'Abnormally high blood pressure, a condition that can increase the risk of heart disease, stroke, and other health problems.',
+    'hypertonic': 'Referring to a solution with a higher concentration of solutes compared to another solution, resulting in water moving out of cells by osmosis.',
+    'hypothesis': 'A proposed explanation for a phenomenon, based on observations and prior knowledge, that can be tested through experimentation.',
+    'hypotonic': 'Referring to a solution with a lower concentration of solutes compared to another solution, resulting in water moving into cells by osmosis.',
+    'immuneSystem': 'The body\'s defense mechanism against pathogens and foreign substances, comprising various organs, cells, and molecules that work together to protect the body from infection and disease.',
+    'incompleteDominance': 'A genetic inheritance pattern in which neither allele is dominant over the other, resulting in a heterozygous phenotype that is an intermediate blend of the two homozygous phenotypes.',
+    'independentAssortment': 'The principle of genetics stating that alleles of different genes segregate independently of one another during gamete formation, leading to genetic diversity in offspring.',
+    'insect': 'A class of invertebrate animals characterized by three pairs of legs, a segmented body, and typically one or two pairs of wings.',
+    'invertebrate': 'An animal lacking a backbone or spinal column, including species such as insects, worms, mollusks, and jellyfish.',
+    'ion': 'An atom or molecule that has gained or lost one or more electrons, acquiring an electrical charge.',
+    'isotonic': 'Referring to a solution with the same concentration of solutes as another solution, resulting in no net movement of water across a semipermeable membrane.',
+    'innateImmunity': 'The body\'s natural, non-specific defense mechanism against pathogens, present from birth and providing immediate protection against infection.',
+    'inheritance': 'The passing of traits or characteristics from parent to offspring through the transmission of genetic information.',
+    'interphase': 'The phase of the cell cycle during which the cell grows, carries out its normal functions, and replicates its DNA in preparation for cell division.',
+    'intron': 'A non-coding segment of DNA within a gene that is transcribed into RNA but is removed during RNA processing, leaving only the exons to be translated into protein.',
+    'invasiveSpecies': 'A non-native species that is introduced to a new environment and has the potential to cause harm to native species and ecosystems.',
+    'ionChannel': 'A pore-forming protein complex in a cell membrane that allows the selective passage of ions, regulating the electrical conductivity of the cell membrane and the flow of ions across it.',
+    'juxtacrineSignaling': 'A type of cell signaling in which a signaling molecule binds to receptors on an adjacent cell, allowing direct communication between the two cells.',
+    'juxtaglomerularApparatus': 'A structure in the kidney that regulates blood pressure and kidney function, located near the glomerulus of the nephron.',
+    'karyotype': 'The number, size, and shape of chromosomes in the nucleus of a eukaryotic cell, typically depicted in a systematic arrangement.',
+    'kingdom': 'The highest taxonomic rank in the hierarchy of biological classification, representing a group of organisms sharing certain fundamental characteristics.',
+    'krebsCycle': 'A series of biochemical reactions that occur in the mitochondria of eukaryotic cells, involved in the production of ATP through the oxidation of acetyl-CoA.',
+    'kinesis': 'A type of behavioral response in which the rate of movement or activity of an organism changes in response to a stimulus, but the direction of movement is random.',
+    'kineticEnergy': 'The energy possessed by an object due to its motion.',
+    'lamarckism': 'A theory of evolution proposed by Jean-Baptiste Lamarck, suggesting that acquired traits can be passed on to offspring.',
+    'lateralLineSystem': 'A sensory system found in aquatic vertebrates, including fish and amphibians, consisting of a series of sensory organs along the sides of the body that detect water movement and pressure changes.',
+    'lenticEcosystem': 'An ecosystem characterized by still or slow-moving water, such as ponds, lakes, and wetlands.',
+    'ligament': 'A tough band of fibrous connective tissue that connects bones to other bones, providing stability and support to joints.',
+    'lipid': 'A diverse group of organic compounds that are insoluble in water, including fats, oils, phospholipids, and steroids.',
+    'lysosome': 'A membrane-bound organelle found in eukaryotic cells, containing digestive enzymes that break down waste materials and cellular debris.',
+    'meiosis': 'A type of cell division that produces gametes (sperm and egg cells) with half the number of chromosomes as the parent cell, leading to genetic diversity in offspring.',
+    'mitosis': 'A type of cell division that results in two daughter cells with the same number of chromosomes as the parent cell, used for growth, repair, and asexual reproduction.',
+    'mutation': 'A permanent alteration in the DNA sequence of a gene or chromosome, resulting in genetic variation within a population.',
+    'metabolism': 'The chemical processes occurring within living organisms that convert food into energy and substances needed for growth, maintenance, and repair.',
+    'microorganism': 'A microscopic organism, including bacteria, viruses, archaea, fungi, and protists.',
+    'monoclonalAntibody': 'An antibody produced by a single clone of cells that are genetically identical, used in medical research and therapy to target specific molecules or cells.',
+    'mycelium': 'The vegetative part of a fungus, consisting of a network of thread-like hyphae that absorb nutrients from the environment.',
+    'myoglobin': 'A protein found in muscle tissue that binds to oxygen, storing it for use during periods of low oxygen availability.',
+    'mendelianInheritance': 'The principles of inheritance described by Gregor Mendel, including the law of segregation, the law of independent assortment, and the concept of dominant and recessive alleles.',
+    'microbiology': 'The branch of biology that studies microorganisms and their interactions with other organisms and the environment.',
+    'mammal': 'A warm-blooded vertebrate characterized by the presence of mammary glands, hair or fur, and typically giving birth to live young, which are nourished with milk.',
+    'membrane': 'A thin, flexible layer of tissue that separates two compartments or environments, serving as a selective barrier and controlling the movement of substances.',
+    'molecule': 'The smallest particle of a substance that retains its chemical properties, consisting of two or more atoms held together by chemical bonds.',
+    'microscope': 'An instrument used to magnify and view objects that are too small to be seen by the naked eye, typically using lenses or electron beams.',
+    'mycorrhiza': 'A symbiotic association between the roots of a plant and fungi, in which the fungus provides nutrients to the plant while receiving carbohydrates in return.',
+    'nucleus': 'A membrane-bound organelle found in eukaryotic cells, containing the cell\'s DNA and serving as the control center for cellular activities.',
+    'nerve': 'A bundle of fibers that transmit electrical impulses between different parts of the body, enabling communication between the brain and other organs.',
+    'neuron': 'A specialized cell that transmits nerve impulses, consisting of a cell body, dendrites, and an axon.',
+    'nitrogenCycle': 'The biogeochemical cycle that describes the movement of nitrogen through the atmosphere, soil, water, and living organisms, including nitrogen fixation, nitrification, denitrification, and ammonification.',
+    'nucleotide': 'The basic building block of nucleic acids (DNA and RNA), consisting of a sugar molecule, a phosphate group, and a nitrogenous base.',
+    'naturalSelection': 'The process by which organisms with advantageous traits are more likely to survive and reproduce, leading to the gradual evolution of populations over time.',
+    'niche': 'The role and position of an organism within its ecosystem, including its interactions with other organisms and its utilization of resources.',
+    'noncodingDNA': 'DNA sequences that do not encode proteins but may have regulatory functions or other roles within the genome.',
+    'noradrenaline': 'A neurotransmitter and hormone produced by the adrenal glands and nerve cells, involved in the body\'s stress response and regulation of blood pressure, heart rate, and metabolism.',
+    'norepinephrine': 'A neurotransmitter and hormone that functions as a stress hormone and neurotransmitter in the sympathetic nervous system, involved in the body\'s fight-or-flight response.',
+    'nutrient': 'A substance that provides nourishment essential for growth, development, and maintenance of life, including carbohydrates, proteins, fats, vitamins, and minerals.',
+    'nematode': 'A type of roundworm belonging to the phylum Nematoda, found in diverse environments and often parasitic on plants or animals.',
+    'photosynthesis': 'The process by which green plants, algae, and some bacteria convert light energy into chemical energy in the form of glucose, using carbon dioxide and water.',
+    'protein': 'A large biomolecule composed of one or more chains of amino acids folded into a specific three-dimensional structure, performing a wide variety of functions in living organisms.',
+    'prokaryote': 'A type of cell lacking a membrane-bound nucleus and organelles, characteristic of bacteria and archaea.',
+    'phospholipid': 'A type of lipid molecule composed of a hydrophilic "head" containing a phosphate group and two hydrophobic "tails" containing fatty acids, forming the basic structure of cell membranes.',
+    'phagocytosis': 'The process by which cells engulf solid particles or other cells by extending pseudopodia around the particles and forming a vesicle called a phagosome.',
+    'polymeraseChainReaction': 'A laboratory technique used to amplify a specific segment of DNA through repeated cycles of denaturation, annealing, and extension using DNA polymerase.',
+    'polypeptide': 'A chain of amino acids linked together by peptide bonds, forming part of a protein molecule.',
+    'plasmid': 'A small, circular DNA molecule found in bacteria and other single-celled organisms, capable of replicating independently of the chromosome and often carrying genes that confer antibiotic resistance or other traits.',
+    'phylum': 'A principal taxonomic category ranking below kingdom and above class, typically consisting of organisms with similar body plans and structural characteristics.',
+    'population': 'A group of individuals of the same species living in a particular area and capable of interbreeding, interacting with one another and their environment.',
+    'prophase': 'The first stage of mitosis or meiosis, characterized by condensation of chromatin into chromosomes, disappearance of the nucleolus, and formation of the mitotic spindle.',
+    'punnettSquare': 'A diagram used in genetics to predict the possible genotypes of offspring in a genetic cross, representing the combination of alleles from two parents.',
+    'pedigree': 'A diagrammatic representation of the genetic relationships among individuals in a family, typically used to track the inheritance of traits or diseases.',
+    'polysaccharide': 'A carbohydrate molecule composed of long chains of monosaccharide units linked together by glycosidic bonds, serving as energy storage molecules or structural components in cells.',
+    'pheromone': 'A chemical substance secreted by an organism that influences the behavior or physiology of other members of the same species, often used for communication and social signaling.',
+    'peroxisome': 'A membrane-bound organelle found in eukaryotic cells, involved in the breakdown of fatty acids and the detoxification of harmful substances.',
+    'quaternaryStructure': 'The fourth level of protein structure, referring to the specific arrangement and interactions of multiple polypeptide chains (subunits) to form a functional protein complex.',
+    'quorumSensing': 'A process used by bacteria to coordinate gene expression in response to cell population density, allowing them to regulate behaviors such as biofilm formation, virulence, and bioluminescence.',
+    'ribosome': 'A cellular organelle composed of ribosomal RNA (rRNA) and protein, responsible for protein synthesis through the translation of messenger RNA (mRNA) into polypeptides.',
+    'RNA': 'Ribonucleic acid, a nucleic acid molecule consisting of a single chain of nucleotides, essential for various biological roles including protein synthesis, gene regulation, and the transmission of genetic information.',
+    'replication': 'The process of copying DNA to produce an identical copy, ensuring genetic continuity between generations of cells.',
+    'respiration': 'The biochemical process by which cells produce energy in the form of adenosine triphosphate (ATP) through the breakdown of glucose or other organic molecules in the presence of oxygen (aerobic respiration) or in the absence of oxygen (anaerobic respiration).',
+    'receptor': 'A protein molecule located on the surface of a cell or within a cell, capable of binding to specific signaling molecules (ligands) and triggering a cellular response.',
+    'redBloodCell': 'A type of blood cell responsible for transporting oxygen from the lungs to the tissues and carbon dioxide from the tissues to the lungs, characterized by its biconcave disc shape and lack of a nucleus.',
+    'ribonucleotide': 'A nucleotide molecule that serves as a building block of RNA, consisting of a ribose sugar, a phosphate group, and one of four nitrogenous bases: adenine (A), cytosine (C), guanine (G), or uracil (U).',
+    'root': 'The underground part of a plant that anchors it in the soil, absorbs water and minerals, and stores reserve food materials.',
+    'reproduction': 'The biological process by which organisms produce offspring, ensuring the continuation of their species.',
+    'recessiveAllele': 'An allele that is expressed as a trait only when two copies are present (homozygous), masking the expression of the corresponding dominant allele in heterozygous individuals.',
+    'regeneration': 'The process by which organisms replace or restore lost or damaged body parts, tissues, or organs, often involving cell proliferation and differentiation.',
+    'restrictionEnzyme': 'A type of enzyme that recognizes specific DNA sequences (restriction sites) and cuts the DNA at or near these sites, used in molecular biology techniques such as DNA cloning and gene editing.',
+    'rhizome': 'A horizontal underground stem that sends out roots and shoots from its nodes, allowing plants to spread vegetatively and store energy reserves.',
+    'ribosomalRNA': 'A type of RNA molecule that forms part of the structure of ribosomes and plays a crucial role in protein synthesis.',
+    'species': 'A group of organisms that can interbreed and produce fertile offspring in nature, sharing similar characteristics and occupying a specific ecological niche.',
+    'symbiosis': 'An ecological relationship between two different species that live together in close physical proximity, often benefiting one or both of the organisms involved.',
+    'synthesis': 'The process of combining simpler substances to form more complex molecules or structures, typically through biochemical reactions or chemical synthesis.',
+    'sexualReproduction': 'A type of reproduction involving the fusion of gametes (sex cells) from two different parents, resulting in offspring with genetic variation.',
+    'stemCell': 'A undifferentiated cell that has the ability to differentiate into specialized cell types and divide to produce more stem cells, playing a key role in development, tissue repair, and regeneration.',
+    'spore': 'A reproductive cell or structure produced by certain organisms, such as fungi, plants, and some protozoa, capable of developing into a new individual without the need for fertilization.',
+    'stomata': 'Small pores found in the epidermis of leaves and stems of plants, involved in gas exchange (oxygen and carbon dioxide) and water regulation through transpiration.',
+    'substrate': 'The substance on which an enzyme acts to catalyze a chemical reaction, typically undergoing transformation into one or more products.',
+    'synapse': 'The junction between two nerve cells or between a nerve cell and a target cell, where electrical or chemical signals are transmitted.',
+    'systematics': 'The scientific study of the diversity of organisms and their evolutionary relationships, including taxonomy, phylogeny, and classification.',
+    'speciation': 'The evolutionary process by which new biological species arise, typically as a result of reproductive isolation and genetic divergence between populations of a common ancestor.',
+    'serotonin': 'A neurotransmitter and hormone found in animals, including humans, involved in the regulation of mood, appetite, sleep, and other physiological functions.',
+    'spermatogenesis': 'The process of producing sperm cells through a series of mitotic and meiotic divisions within the testes of male organisms.',
+    'skeletalSystem': 'The organ system composed of bones, cartilage, and connective tissues that provides support, protection, and movement to the body, as well as producing blood cells and storing minerals.',
+    'smoothMuscle': 'A type of muscle tissue found in the walls of hollow organs, blood vessels, and other structures, responsible for involuntary movements and contractions.',
+    'taxonomy': 'The science of classification and naming of organisms, including the principles and methods used to identify, classify, and organize living things into hierarchical categories based on their evolutionary relationships.',
+    'transcription': 'The process by which the genetic information stored in DNA is copied into messenger RNA (mRNA) by the enzyme RNA polymerase, serving as a template for protein synthesis.',
+    'translation': 'The process by which the genetic information carried by messenger RNA (mRNA) is decoded by ribosomes to synthesize proteins, using transfer RNA (tRNA) molecules carrying specific amino acids.',
+    'tissue': 'A group of similar cells that work together to perform a specific function within an organism, such as muscle tissue, nervous tissue, and connective tissue.',
+    'thermoregulation': 'The process by which organisms maintain their internal body temperature within a narrow range despite fluctuations in external environmental temperature, typically through physiological and behavioral mechanisms.',
+    'trophicLevel': 'The position of an organism in a food chain or food web, determined by its feeding relationship and energy transfer within an ecosystem.',
+    'transgenic': 'Referring to an organism that contains genes or DNA from another species, often introduced through genetic engineering techniques.',
+    'telomere': 'A repetitive DNA sequence located at the ends of chromosomes, serving to protect the chromosome from degradation and preventing the loss of genetic information during DNA replication.',
+    'turgorPressure': 'The pressure exerted by the fluid (usually water) inside the central vacuole of plant cells against the cell wall, providing structural support and rigidity to the cell.',
+    'Tcell': 'A type of white blood cell that plays a central role in the immune response, including the identification and elimination of infected or abnormal cells.',
+    'thylakoid': 'A membrane-bound compartment found within chloroplasts, containing the chlorophyll pigments and other components necessary for the light-dependent reactions of photosynthesis.',
+    'testosterone': 'A steroid hormone primarily produced in the testes of males and to a lesser extent in the ovaries of females, involved in the development of male reproductive tissues and secondary sexual characteristics.',
+    'thymus': 'A primary lymphoid organ located in the upper chest and involved in the development and maturation of T cells (T lymphocytes) of the immune system.',
+    'transposon': 'A mobile DNA sequence that can change its position within the genome of a cell, often resulting in genetic variation or mutations.',
+    'trophicCascade': 'The indirect effects of changes in the abundance or behavior of organisms at one trophic level on organisms at other trophic levels within an ecosystem, often resulting in a chain reaction of ecological consequences.',
+
+    'urinarySystem': 'The organ system responsible for filtering waste products from the blood, regulating blood volume and pressure, and maintaining electrolyte balance by producing, storing, and excreting urine.',
+    'urea': 'A nitrogenous waste product produced in the liver from the breakdown of proteins and amino acids, excreted by the kidneys in urine.',
+    'uterus': 'The hollow, muscular organ in the female reproductive system where fertilized eggs implant and develop into fetuses during pregnancy.',
+    'uricAcid': 'A nitrogenous waste product produced by the breakdown of purines, excreted by birds, reptiles, insects, and some other organisms as a semisolid paste or powder instead of urine.',
+    'ubiquitin': 'A small protein found in eukaryotic cells that plays a crucial role in targeting proteins for degradation by the proteasome, regulating various cellular processes including protein turnover, DNA repair, and immune response.',
+    'ultrastructure': 'The detailed structure of cells and tissues as revealed by electron microscopy, including the organization and arrangement of organelles and other subcellular components.',
+    'unicellular': 'Consisting of a single cell, such as most bacteria, archaea, and protists, capable of carrying out all necessary life processes within a single cell.',
+    'ulna': 'The longer and larger of the two bones in the forearm, located on the side opposite the thumb, articulating with the humerus and the radius to form the elbow joint.',
+    'uropod': 'A posterior appendage found in some crustaceans and other arthropods, involved in locomotion and balance.',
+    'watsoncrickmodel': 'The double-helix model of DNA proposed by James Watson and Francis Crick in 1953, explaining the structure of DNA as a pair of antiparallel strands twisted into a helical shape and held together by hydrogen bonds between complementary nitrogenous bases.',
+    'whiteBloodCell': 'A type of blood cell involved in the immune response, including the recognition and elimination of pathogens, foreign substances, and abnormal cells.',
+    'wavelength': 'The distance between successive peaks (or troughs) of a wave, such as light, sound, or electromagnetic radiation, determining its color (in the case of light) or pitch (in the case of sound).',
+    'waterCycle': 'The continuous movement of water between the atmosphere, land, and oceans through processes such as evaporation, condensation, precipitation, runoff, and transpiration.',
+    'wetland': 'An area of land characterized by saturated soil or standing water for at least part of the year, creating a unique ecosystem with specialized plant and animal species adapted to wet conditions.',
+    'wolffianDuct': 'A duct system found in the embryo of vertebrates, developing into the male reproductive tract (epididymis, vas deferens, and seminal vesicles) in mammals if the individual has Y chromosomes and testosterone.',
+    'woundHealing': 'The physiological process by which the body repairs damaged tissues and restores their structure and function after injury, involving inflammation, tissue formation, and tissue remodeling.',
+    'xChromosome': 'One of the two sex chromosomes, typically found in two copies in females (XX) and one copy in males (XY), determining the sex of an individual and carrying genes related to various traits and conditions.',
+    'xRayCrystallography': 'A technique used to determine the three-dimensional structure of molecules, particularly crystals, by analyzing the diffraction patterns produced when X-rays are scattered by the atoms within the sample.',
+    'xenobiotic': 'A foreign chemical substance not normally found in the body, often referring to pollutants, drugs, or other substances introduced from outside the organism.',
+    'xerophyte': 'A plant adapted to survive in dry or arid conditions, characterized by features such as reduced leaf surface area, thick cuticles, and specialized water-storing tissues.',
+    'xylem': 'A type of plant vascular tissue responsible for transporting water and dissolved minerals from the roots to the rest of the plant, consisting of tracheids, vessel elements, fibers, and parenchyma cells.',
+    'xylemVessel': 'A specialized elongated cell found in xylem tissue, forming a continuous tube for the transport of water and minerals throughout the plant.',
+    'yeast': 'A single-celled fungus belonging to the kingdom Fungi, commonly used in baking and brewing processes, as well as in scientific research as a model organism for studying genetics and cell biology.',
+    'yolk': 'The nutrient-rich substance found in the eggs of many animals, serving as a source of nutrition for the developing embryo.',
+    'yChromosome': 'One of the two sex chromosomes found in males (XY), containing genes related to male sex determination and development.',
+    'ylinkedinheritance': 'The inheritance pattern of genes located on the Y chromosome, passed from father to son in a predictable manner.',
+    'yersiniaPestis': 'A bacterium responsible for causing the bubonic plague (Black Death), transmitted to humans through the bites of infected fleas or through contact with infected animals or humans.',
+    'zygote': 'The diploid cell formed by the fusion of two haploid gametes (sperm and egg) during fertilization, representing the earliest stage of development in sexually reproducing organisms.',
+    'zoonosis': 'An infectious disease that can be transmitted between animals and humans, either directly or indirectly, typically caused by bacteria, viruses, parasites, or fungi.',
+    'zooplankton': 'Small animals or organisms that drift in water bodies, including microscopic protozoans, small crustaceans, and larval stages of larger animals, forming a vital component of aquatic food webs.',
+        };
+
+        var definition = dictionary[word.toLowerCase()];
+
+        if (definition) {
+            var definitionContainer = document.createElement('div');
+            definitionContainer.classList.add('box-container');
+
+            var definitionHeading = document.createElement('h2');
+            definitionHeading.textContent = word;
+
+            var definitionText = document.createElement('p');
+            definitionText.textContent = ''; 
+
+            definitionContainer.appendChild(definitionHeading);
+            definitionContainer.appendChild(definitionText);
+
+            document.getElementById('definition').innerHTML = '';
+            document.getElementById('definition').appendChild(definitionContainer);
+
+            var index = 0;
+            var typingInterval = setInterval(function() {
+                definitionText.textContent += definition.charAt(index);
+                index++;
+                if (index > definition.length) {
+                    clearInterval(typingInterval);
+                    document.getElementById('diary').classList.add('active');
+                    saveDiaryEntry(word);
+                  
+                    document.getElementById('diary').style.display = 'block';
+                }
+            }, 50);
+        } else {
+            document.getElementById('definition').textContent = 'Definition not found.';
+         
+            document.getElementById('diary').classList.remove('active');
+           
+            document.getElementById('diary').style.display = 'none';
+        }
+    }
+
+    function addEntry() {
+        var entryContent = document.getElementById('newEntry').value;
+
+        if (entryContent.trim() !== '') {
+            var entryDiv = document.createElement('div');
+            entryDiv.classList.add('entry');
+
+            var boxDiv = document.createElement('div');
+            boxDiv.classList.add('box-container');
+            boxDiv.textContent = entryContent;
+
+            entryDiv.appendChild(boxDiv);
+
+            var deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.classList.add('delete-button');
+            deleteButton.onclick = function () {
+                deleteEntry(entryDiv);
+            };
+
+            entryDiv.appendChild(deleteButton);
+
+            document.getElementById('diaryEntries').appendChild(entryDiv);
+
+            document.getElementById('newEntry').value = '';
+        } else {
+            alert('Please write something in the entry!');
+        }
+    }
+
+    function deleteEntry(entryDiv) {
+        entryDiv.remove();
+    }
+
+    function saveDiaryEntry(term) {
+        var entryContent = document.getElementById('newEntry').value;
+
+        if (entryContent.trim() !== '') {
+            console.log('Saving diary entry:', entryContent, 'under term:', term);
+
+            var entries = JSON.parse(localStorage.getItem('diaryEntries')) || {};
+            console.log('Existing entries for term:', entries[term.toLowerCase()]);
+
+            entries[term.toLowerCase()] = entries[term.toLowerCase()] || [];
+            entries[term.toLowerCase()].push(entryContent);
+            console.log('Updated entries for term:', entries[term.toLowerCase()]);
+
+            localStorage.setItem('diaryEntries', JSON.stringify(entries));
+        }
+    }
+
+    function resetDictionary() {
+        document.getElementById('definition').innerHTML = '';
+        document.getElementById('wordInput').value = '';
+        document.getElementById('diary').style.display = 'none';
+    }
+    </script>
+</body>
+
+</html>
